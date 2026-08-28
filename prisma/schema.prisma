@@ -11,6 +11,13 @@ enum UserRole{
   sale
 }
 
+enum DeliveryStatus{
+  processing
+  shipped
+  delivered
+  canceled
+}
+
 model User{
   id String @id @default(uuid())
   email String @unique
@@ -18,6 +25,38 @@ model User{
 
   role UserRole @default(customer)
 
+  deliveries Delivery[]
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+}
+
+model Delivery{
+  id String @id @default(uuid())
+  user_id String @map("user_id")
+  description String
+
+  status DeliveryStatus @default(processing)
+
+  user User @relation(fields: [user_id], references: [id])
+  logs DeliveryLogs[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+
+  @@map("deliveries")
+}
+
+model DeliveryLogs{
+  id String @id @default(uuid())
+  description String
+  deliveryId String @map("delivery_id")
+
+  delivery Delivery @relation(fields: [deliveryId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("delivery_logs")
 }
