@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/server.ts"
+    "dev": "tsx watch --env-file .envsrc/server.ts"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +18,7 @@
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/node": "^26.2.0",
+    "prisma": "^8.0.0-rc.12",
     "tsx": "^4.23.12",
     "typescript": "^7.0.2"
   }
